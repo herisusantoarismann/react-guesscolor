@@ -19,12 +19,15 @@ function App() {
     for (let i = 0; i < 3; i++) {
       setColors((prevState) => [...prevState, randomColor()]);
     }
-    console.log(correct);
   };
 
   const onGuess = (guess: string) => {
     if (guess === colors[correct]) setResult(true);
     else setResult(false);
+    generateColor();
+  };
+
+  const onShuffle = () => {
     generateColor();
   };
 
@@ -36,7 +39,7 @@ function App() {
   return (
     <div className="container">
       <h1 className="title">Guess color by choose options below.</h1>
-      <Button text="Shuffle" />
+      <Button text="Shuffle" onClick={() => onShuffle()} />
       <div
         className="color"
         style={{ backgroundColor: `#${colors[correct]}` }}
