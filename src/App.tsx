@@ -4,8 +4,8 @@ import Button from "./components/Button";
 
 function App() {
   const [colors, setColors] = React.useState<Array<string>>([]);
-  const [correct, setCorrect] = React.useState<string>("");
-  const [result, setResult] = React.useState<string>("");
+  const [correct, setCorrect] = React.useState<number>(0);
+  const [result, setResult] = React.useState<boolean | null>(null);
 
   const randomColor = () => {
     const randomColor = Math.floor(Math.random() * 16777215).toString(16);
@@ -13,12 +13,19 @@ function App() {
   };
 
   const generateColor = () => {
+    setColors([]);
+    const answer = Math.floor(Math.random() * 3);
+    setCorrect(answer);
     for (let i = 0; i < 3; i++) {
-      console.log(randomColor());
       setColors((prevState) => [...prevState, randomColor()]);
     }
-    const answer = Math.floor(Math.random() * 2) + 1;
-    setCorrect(colors[answer]);
+    console.log(correct);
+  };
+
+  const onGuess = (guess: string) => {
+    if (guess === colors[correct]) setResult(true);
+    else setResult(false);
+    generateColor();
   };
 
   React.useEffect(() => {
@@ -30,13 +37,22 @@ function App() {
     <div className="container">
       <h1 className="title">Guess color by choose options below.</h1>
       <Button text="Shuffle" />
-      <div className="color" style={{ backgroundColor: `#${correct}` }}></div>
+      <div
+        className="color"
+        style={{ backgroundColor: `#${colors[correct]}` }}
+      ></div>
       <div className="options">
         {colors.map((color: string, i: number) => {
-          return <Button text={color} key={i} />;
+          return (
+            <Button text={`#${color}`} onClick={() => onGuess(color)} key={i} />
+          );
         })}
       </div>
-      <p className="result">Wrong Answer!</p>
+      {result !== null && (
+        <p className={`result ${result ? "correct" : "wrong"}`}>
+          {result ? "Correct Answer!" : "Wrong Answer!"}
+        </p>
+      )}
     </div>
   );
 }
