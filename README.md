@@ -28,7 +28,7 @@
 
 ## About The Project
 
-![GuessColor App](https://github.com/herisusantoarismann/react-guesscolor/blob/master/Screenshoot.png)
+![GuessColor App](https://github.com/herisusantoarismann/react-guesscolor/blob/master/Screenshot.png)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
